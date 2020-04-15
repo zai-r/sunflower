@@ -17,6 +17,14 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew assembleRelease
+    - name: Sign release apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: keystore/keystore_release.jks
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
     - name: Upload artifact
       uses: actions/upload-artifact@v2-preview
       with: 
