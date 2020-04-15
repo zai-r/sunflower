@@ -1,8 +1,7 @@
-name: Android CI
+name: Release Build
 
 on:
-  push:
-    branches: master
+  create
 
 jobs:
   build:
