@@ -1,4 +1,4 @@
-name: Staging Build
+name: Debug Build
 
 on:
   pull_request:
