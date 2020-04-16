@@ -19,11 +19,13 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleRelease
     - name: Set output path
-      run: mkdir -p $OUTPUT_PATH
+      run: |
+        mkdir -p ${OUTPUT_PATH}
+        ls -l app/
     - name: Sign release apk
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: $OUTPUT_PATH
+        releaseDirectory: ${OUTPUT_PATH}
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
