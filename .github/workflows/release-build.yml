@@ -8,30 +8,32 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      OUTPUT_PATH: app/release
+
     steps:
     - uses: actions/checkout@v2
+
     - name: set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+
     - name: Build with Gradle
       run: ./gradlew assembleRelease
-    - name: Set output path
-      run: |
-        mkdir -p ${OUTPUT_PATH}
-        ls -l app/
+
+    - name: Create output path
+      run: mkdir -p release-output
+
     - name: Sign release apk
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: ${OUTPUT_PATH}
+        releaseDirectory: release-output
         signingKeyBase64: ${{ secrets.SIGNING_KEY }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
         keyPassword: ${{ secrets.KEY_PASSWORD }}
+
     - name: Upload artifact
       uses: actions/upload-artifact@v2-preview
       with: 
         name: apk
-        path: ${OUTPUT_PATH}/*.apk
+        path: release-output/*.apk
